@@ -2,8 +2,14 @@ package com.example.demo.student;
 
 import java.time.LocalDate;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document("Student")
 public class Student {
-    private Long id;
+
+    @Id
+    private String id;
     private String name;
     private Integer age;
     private LocalDate dob;
@@ -12,7 +18,7 @@ public class Student {
     public Student () {
     }
 
-    public Student(Long id, String name, Integer age, LocalDate dob, String email) {
+    public Student(String id, String name, Integer age, LocalDate dob, String email) {
         this.id = id;
         this.name = name;
         this.age = age;
@@ -28,11 +34,11 @@ public class Student {
     }
 
 
-    public Long getId() {
+    public String getId() {
         return this.id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
