@@ -14,7 +14,8 @@ public class StudentService {
     private StudentRepository studentRepository;
 
     // Create
-    public Student createStudent (Student student) {
+    public Student createStudent (String name, Integer age, LocalDate dob, String email) {
+        Student student = new Student(name, age, dob, email);
         return studentRepository.save(student);
     }
 

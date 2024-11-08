@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Document("Student")
 public class Student {
 
@@ -12,6 +14,8 @@ public class Student {
     private String id;
     private String name;
     private Integer age;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dob;
     private String email;
 
