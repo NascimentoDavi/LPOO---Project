@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "api/v1/user")
 public class UserController {
 
+    // UserService dependency injected into UserController
     @Autowired
     private UserService UserService;
 
@@ -45,12 +47,14 @@ public class UserController {
     public ResponseEntity<?> createUser (@RequestBody User user, @RequestHeader("Content-Type") String contentType) {
 
         // Check if the content-type is Application/Json
-        if(!"application/json".equals(contentType)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid content type. Expected application/json.");
-        } else {
-            return ResponseEntity.status(HttpStatus.CREATED).body(UserService.createUser(user.getName(), user.getAge(), user.getDob(), user.getEmail(), user.getHeight(), user.getWeight()));
-        }
+        // if(!"application/json".equals(contentType)) {
+        //     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid content type. Expected application/json.");
+        // } else {
+        //     return ResponseEntity.status(HttpStatus.CREATED).body(UserService.createUser(user.getName(), user.getAge(), user.getDob(), user.getEmail(), user.getHeight(), user.getWeight()));
+        // }
         // return UserService.createUser(User.getName(), User.getAge(), User.getDob(), User.getEmail(), User.getHeight(), User.getWeight());
+
+        return UserService.createUserWithContentTypeCheck(user, contentType);
 
     }
 
@@ -64,6 +68,29 @@ public class UserController {
     @PutMapping("/{id}")
     public User updateUser (String id, User updatedUser) {
         return UserService.updateUser(id, updatedUser);
+    }
+
+    // Create the Users log activity
+    @PutMapping("/{id}/logActivity")
+    public ResponseEntity<?> logUserActivity(@PathVariable String id, @RequestBody String activity) {
+        Optional<User> userOpt = UserService.findUserById(id);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            user.addActivity(activity);
+            UserService.saverUser(user);
+            return ResponseEntity.ok("Activity logged successfully.");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+    }
+
+    // Get the user activity
+    @GetMapping("/{id}/activityLog")
+    public ResponseEntity<?> getUserActivityLog(@PathVariable String id) {
+        Optional<User> userOpt = UserService.findUserById(id);
+        if (userOpt.isPresent()) {
+            return ResponseEntity.ok(userOpt.get().getActivityLog());
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
     }
 
     // Delete User

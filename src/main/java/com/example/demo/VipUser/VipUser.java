@@ -15,13 +15,34 @@ public class VipUser extends User {
     public VipUser() {
     }
 
-    public VipUser(String id, String name, Integer age, LocalDate dob, String email, double height, double weight, String vipStatus, double IMC) {
+    // Constructor with ID
+    public VipUser(
+        String id,
+        String name,
+        Integer age,
+        LocalDate dob,
+        String email,
+        double height,
+        double weight,
+        String vipStatus,
+        double IMC)
+        {
         super(id, name, age, dob, email, height, weight);
         this.vipStatus = vipStatus;
         this.IMC = IMC;
     }
 
-    public VipUser(String name, Integer age, LocalDate dob, String email, double height, double weight, String vipStatus, double IMC) {
+    // Constructor without ID
+    public VipUser(
+        String name, 
+        Integer age, 
+        LocalDate dob, 
+        String email,
+        double height, 
+        double weight, 
+        String vipStatus,
+        double IMC)
+        {
         super(name, age, dob, email, height, weight);
         this.vipStatus = vipStatus;
         this.IMC = IMC;

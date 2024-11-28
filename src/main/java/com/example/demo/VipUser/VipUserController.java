@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.user.UserService;
+
 @RestController
 @RequestMapping(path = "api/v1/vipUser")
 public class VipUserController {
 
+    // UserService dependency injected into UserController
     @Autowired
     private VipUserService vipUserService;
 
@@ -43,14 +46,8 @@ public class VipUserController {
     // Create VipUser
     @PostMapping("/createVipUser")
     public ResponseEntity<?> createVipUser (@RequestBody VipUser vipUser, @RequestHeader("Content-Type") String contentType) {
+        return VipUserService.createVIPUserWithContentTypeCheck(vipUser, contentType);
 
-        // Check if the content-type is Application/Json
-        if(!"application/json".equals(contentType)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid content type. Expected application/json.");
-        } else {
-            // Creating the VIP user
-            return ResponseEntity.status(HttpStatus.CREATED).body(vipUserService.createVipUser(vipUser.getName(), vipUser.getAge(), vipUser.getDob(), vipUser.getEmail(), vipUser.getHeight(), vipUser.getWeight(), vipUser.getVipStatus(), vipUser.getSpecialBenefits()));
-        }
     }
 
     // Count VipUsers by Age

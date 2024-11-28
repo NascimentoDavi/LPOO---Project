@@ -1,13 +1,14 @@
 package com.example.demo.user;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Document("User")
+@Document("User") // Indicates its a class that will be registered as a document inside a collection in MongoDB.
 public class User {
 
     @Id
@@ -22,7 +23,10 @@ public class User {
     private double height;
     private double weight;
 
-    public User () {
+    // Collection Structure
+    private ArrayList<String> activityLog = new ArrayList<>();
+
+    public User() {
     }
 
     public User(
@@ -33,7 +37,7 @@ public class User {
         String email,
         double height,
         double weight
-        ) {
+    ) {
         this.id = id;
         this.name = name;
         this.age = age;
@@ -50,7 +54,7 @@ public class User {
         String email,
         double height,
         double weight
-        ) {
+    ) {
         this.name = name;
         this.age = age;
         this.dob = dob;
@@ -59,7 +63,7 @@ public class User {
         this.weight = weight;
     }
 
-
+    // Getters and Setters for the existing fields
     public String getId() {
         return this.id;
     }
@@ -100,24 +104,52 @@ public class User {
         this.email = email;
     }
 
-    public double getHeight () {
+    public double getHeight() {
         return this.height;
     }
 
-    public double getWeight () {
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+    public double getWeight() {
         return this.weight;
     }
 
-    public void setHeight (double h) {
-        this.height = h;
+    public void setWeight(double weight) {
+        this.weight = weight;
     }
 
-    public void setWeight (double w) {
-        this.weight = w;
+    // Getters and Setters for activityLog
+    public ArrayList<String> getActivityLog() {
+        return activityLog;
+    }
+
+    public void setActivityLog(ArrayList<String> activityLog) {
+        this.activityLog = activityLog;
+    }
+
+    // Utility method to add an activity to the log
+    public void addActivity(String activity) {
+        this.activityLog.add(activity);
+    }
+
+    // Utility method to clear the activity log
+    public void clearActivityLog() {
+        this.activityLog.clear();
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        return "User{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", age=" + age +
+                ", dob=" + dob +
+                ", height=" + height +
+                ", weight=" + weight +
+                ", activityLog=" + activityLog +
+                '}';
     }
 }
