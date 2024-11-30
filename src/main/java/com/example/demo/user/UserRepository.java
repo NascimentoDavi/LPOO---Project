@@ -13,7 +13,7 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     // Find User by email, nly returning the name, age and dateofbirth fields
     @Query(value="{email:'?0'}", fields="{'name' : 1, 'age' : 1, 'dob' : 1}")
-    Optional<User> findUserByEmail(String email);
+    User findUserByEmail(String email);
 
     @Query(value = "{age: ?0}", count = true)
     long countByAge(Integer age);

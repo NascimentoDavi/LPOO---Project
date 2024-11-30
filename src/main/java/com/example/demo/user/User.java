@@ -3,15 +3,15 @@ package com.example.demo.user;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Document("User") // Indicates its a class that will be registered as a document inside a collection in MongoDB.
 public class User {
 
-    @Id
+    @MongoId
     private String id;
     private String name;
     private String email;

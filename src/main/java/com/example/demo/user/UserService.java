@@ -49,7 +49,7 @@ public class UserService {
 
     // Find User by E-mail
     public Optional<User> findUserByEmail(String email) {
-        return UserRepository.findUserByEmail(email);
+        return Optional.ofNullable(UserRepository.findUserByEmail(email));
     }
 
     // Count Users by Age

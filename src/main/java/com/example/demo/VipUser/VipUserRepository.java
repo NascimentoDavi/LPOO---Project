@@ -22,7 +22,4 @@ public interface VipUserRepository extends MongoRepository<VipUser, String> {
     // Count VipUsers by age
     @Query(value = "{age: ?0}", count = true)
     long countByAge(Integer age);
-
-    // Find VipUser by ID (default method from MongoRepository)
-    Optional<VipUser> findById(String id);
 }
